@@ -1,4 +1,6 @@
+## The following functions create a cache matric object,
 ## in order to be repeatedly used for the matrix inversion solution,
+## while the matrix inversion calculation occurs only once.
 ##
 ## Usage:
 ##  MyInvertibleMatrix <- matrix(c(1, 2, 3, 4), nrow=2, ncol=2)
