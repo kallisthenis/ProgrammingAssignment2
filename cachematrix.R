@@ -1,15 +1,37 @@
-## Put comments here that give an overall description of what your
-## functions do
+## in order to be repeatedly used for the matrix inversion solution,
+##
+## Usage:
+##  MyInvertibleMatrix <- matrix(c(1, 2, 3, 4), nrow=2, ncol=2)
+##  cacheMatrix <- makeCacheMatrix(MyInvertibleMatrix)
+##  cacheSolve(cacheMatrix)
 
-## Write a short comment describing this function
+## Object creation for an invertible matrix.
 
 makeCacheMatrix <- function(x = matrix()) {
-
+	cachedInv <- NULL
+	set <- function(y) {
+		x <<- y
+    cachedInv <<- NULL
+  }
+  get <- function() x
+  setInverse <- function(inverse) cachedInv <<- inverse
+  getInverse <- function() cachedInv
+  list(set = set, get = get,
+       setInverse = setInverse,
+       getInverse = getInverse)
 }
 
-
-## Write a short comment describing this function
+## Return the inverse of cacheMatrix
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
+		inverseFunc <- x$getInverse()
+  if(!is.null(inverseFunc)) {
+    message("getting cached data")
+    return(inverseFunc)
+  }
+  data <- x$get()
+  inverseFunc <- solve(data, ...)
+  x$setInverse(inverseFunc)
+  inverseFunc
 }
